@@ -58,9 +58,16 @@ end
 function script_update(settings)
    m_sFileLocation = obs.obs_data_get_string(settings,"death_file_location")
    
-   local fin = io.open(m_sFileLocation.."/"..m_sFilename,"w+")
-   fin:write("0")
-   fin:close()
+   local fin = io.open(m_sFileLocation.."/"..m_sFilename,"r")
+   
+   if(fin) then
+      m_iDeathCount = fin:read()
+      fin:close()
+   else
+      fin = io.open(m_sFileLocation.."/"..m_sFilename,"w+")
+      fin:write("0")
+      fin:close()
+   end
 end
 
 -- Default settings for intial setup of script(none at this time).
